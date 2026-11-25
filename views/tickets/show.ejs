@@ -1,3 +1,5 @@
+<% const role = typeof userRole !== 'undefined' ? userRole : 'user'; %>
+
 <%- include('../partials/header') %>
 
 <header class="page-header">
@@ -12,9 +14,19 @@
     <p class="subtitle">Aberto <%= timeAgo(ticket.createdAt) %> por <strong><%= ticket.solicitante %></strong></p>
   </div>
   <div class="header-actions">
-    <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary" id="ticket-edit"><%- icon('edit', 16) %> Editar</a>
+
+    <% if (role === 'admin') { %>
+       <a href="/tickets/<%= ticket.id %>/edit" class="btn btn-secondary" id="ticket-edit"><%- icon('edit', 16) %> Editar</a>
     <form method="POST" action="/tickets/<%= ticket.id %>?_method=DELETE" data-confirm="Excluir definitivamente o chamado <%= ticket.protocolo %>?">
-      <button type="submit" class="btn btn-danger" id="ticket-delete"><%- icon('trash', 16) %> Excluir</button>
+    <% } %>
+
+    <% if (role === 'admin') { %>
+       <button type="submit" class="btn btn-danger" id="ticket-delete"><%- icon('trash', 16) %> Excluir</button>
+    <% } %>
+
+   
+
+      
     </form>
   </div>
 </header>

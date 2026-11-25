@@ -22,9 +22,25 @@ app.use((req, res, next) => {
   next();
 });
 
+// Rota de logout ANTES do 404
+app.post('/logout', (req, res) => {
+  if (!req.session) {
+    return res.json({ ok: true });
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Erro ao destruir sessão:', err);
+      return res.status(500).json({ ok: false });
+    }
+    res.clearCookie('connect.sid');
+    return res.json({ ok: true });
+  });
+});
+
 app.use('/', routes);
 
-// 404
+// 404 (sempre depois de todas as rotas)
 app.use((req, res, next) => {
   const erro = new Error('Página não encontrada.');
   erro.status = 404;

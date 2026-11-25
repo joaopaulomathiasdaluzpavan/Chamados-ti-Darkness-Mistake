@@ -8,7 +8,7 @@ const categories = require('../controllers/categoryController');
 const router = express.Router();
 
 // Dashboard
-router.get('/', dashboard.index);
+router.get('/dashboard', dashboard.index);
 
 // Chamados
 router.get('/tickets', tickets.index);
@@ -38,3 +38,5 @@ router.put('/categories/:id', categories.update);
 router.delete('/categories/:id', categories.destroy);
 
 module.exports = router;
+
+

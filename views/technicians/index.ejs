@@ -1,4 +1,5 @@
 <%- include('../partials/header') %>
+<% const role = typeof userRole !== 'undefined' ? userRole : 'user'; %>
 
 <header class="page-header">
   <div>
@@ -29,10 +30,15 @@
           <a href="/tickets?tecnico=<%= t.id %>"><strong><%= t.concluidos %></strong><span>concluídos</span></a>
         </div>
         <div class="entity-actions">
-          <a href="/technicians/<%= t.id %>/edit" class="btn btn-secondary btn-sm" id="tech-edit-<%= t.id %>"><%- icon('edit', 14) %> Editar</a>
-          <form method="POST" action="/technicians/<%= t.id %>?_method=DELETE" data-confirm="Remover <%= t.nome %>? Os chamados dele ficarão sem responsável.">
-            <button type="submit" class="btn btn-ghost btn-sm danger-text" id="tech-delete-<%= t.id %>"><%- icon('trash', 14) %> Remover</button>
-          </form>
+          <% if (role === 'admin') {%>
+            <a href="/technicians/<%= t.id %>/edit" class="btn btn-secondary btn-sm" id="tech-edit-<%= t.id %>"><%- icon('edit', 14) %> Editar</a>
+          <%} %>
+          
+          <% if (role === 'admin') { %>
+            <form method="POST" action="/technicians/<%= t.id %>?_method=DELETE" data-confirm="Remover <%= t.nome %>? Os chamados dele ficarão sem responsável.">
+              <button type="submit" class="btn btn-ghost btn-sm danger-text" id="tech-delete-<%= t.id %>"><%- icon('trash', 14) %> Remover</button>
+            </form>
+          <% } %>
         </div>
       </article>
     <% }) %>

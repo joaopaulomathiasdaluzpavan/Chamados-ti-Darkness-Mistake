@@ -19,4 +19,18 @@ router.post('/:id/andamento', asyncHandler(chamados.atualizarAndamento));
 router.post('/:id/comentarios', asyncHandler(comentarios.criar));
 router.post('/:id/excluir', asyncHandler(chamados.excluir));
 
+// Middleware simples para exigir perfil admin
+function exigirAdmin(req, res, next) {
+  const role = req.session?.userRole || 'user';
+  if (role !== 'admin') {
+    return res.status(403).redirect('/chamados?erro=Apenas+administradores+podem+excluir+chamados');
+  }
+  next();
+}
+
+// Na rota de exclusão já existente, basta encaixar o exigirAdmin no meio:
+router.post('/chamados/:id/excluir', exigirAdmin, (req, res) => {
+  // ... mantenha o seu código atual de exclusão aqui dentro ...
+});
+
 module.exports = router;

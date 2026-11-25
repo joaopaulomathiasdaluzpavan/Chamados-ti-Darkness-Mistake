@@ -26,11 +26,28 @@
           <a href="/tickets?categoria=<%= c.id %>&status=ativos"><strong><%= c.ativos %></strong><span>em aberto</span></a>
           <a href="/tickets?categoria=<%= c.id %>"><strong><%= c.total %></strong><span>no total</span></a>
         </div>
+
+        <!---->
         <div class="entity-actions">
-          <a href="/categories/<%= c.id %>/edit" class="btn btn-secondary btn-sm" id="cat-edit-<%= c.id %>"><%- icon('edit', 14) %> Editar</a>
-          <form method="POST" action="/categories/<%= c.id %>?_method=DELETE" data-confirm="Remover a categoria <%= c.nome %>? Os chamados ficarão sem categoria.">
+
+          <% const role = typeof userRole !== 'undefined' ? userRole : 'user'; %>
+
+          <% if (role === 'admin') { %>
+            <a href="/categories/<%= c.id %>/edit" class="btn btn-secondary btn-sm" id="cat-edit-<%= c.id %>"><%- icon('edit', 14) %> Editar</a>
+          <!---->
+            <% const role = typeof userRole !== 'undefined' ? userRole : 'user'; %>
+          <% } %>
+          
+
+        <!---->
+
+          <% if (role === 'admin') { %>
+            <form method="POST" action="/categories/<%= c.id %>?_method=DELETE" data-confirm="Remover a categoria <%= c.nome %>? Os chamados ficarão sem categoria.">
             <button type="submit" class="btn btn-ghost btn-sm danger-text" id="cat-delete-<%= c.id %>"><%- icon('trash', 14) %> Remover</button>
           </form>
+          <% } %>
+          <!---->
+          
         </div>
       </article>
     <% }) %>

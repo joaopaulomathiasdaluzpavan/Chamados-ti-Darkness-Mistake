@@ -90,10 +90,13 @@
       </dl>
     </section>
 
-    <form method="post" action="/chamados/<%= chamado.id %>/excluir"
-          onsubmit="return confirm('Excluir este chamado e todo o histórico? Esta ação não pode ser desfeita.');">
-      <button class="botao-perigo" type="submit">Excluir chamado</button>
-    </form>
+    <% const role = typeof userRole !== 'undefined' ? userRole : 'user'; %>
+    <% if (role === 'admin') { %>
+      <form method="post" action="/chamados/<%= chamado.id %>/excluir"
+            onsubmit="return confirm('Excluir este chamado e todo o histórico? Esta ação não pode ser desfeita.');">
+        <button class="botao-perigo" type="submit">Excluir chamado</button>
+      </form>
+    <% } %>
   </aside>
 </div>
 

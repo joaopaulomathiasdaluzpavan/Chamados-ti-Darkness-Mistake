@@ -1,3 +1,5 @@
+console.log('>>> DASHBOARD INDEX CHAMADO');
+
 const { fn, col } = require('sequelize');
 const { Chamado, Comentario } = require('../models');
 const { STATUS } = require('../constants');

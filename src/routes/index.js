@@ -4,7 +4,7 @@ const dashboard = require('../controllers/dashboardController');
 
 const router = express.Router();
 
-router.get('/', asyncHandler(dashboard.index));
+router.get('/dashboard', asyncHandler(dashboard.index));
 router.use('/chamados', require('./chamados'));
 
 module.exports = router;
